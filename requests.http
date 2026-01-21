@@ -1,0 +1,16 @@
+GET http://localhost:8080/api/v1/beer
+Accept: application/json
+
+
+###
+GET http://localhost:8080/api/v1/beer/7adc4ba5-f339-44d7-b37d-db26aa729e7f
+Accept: application/json
+
+
+###
+GET http://localhost:8080/api/v1/customer
+
+
+###
+GET http://localhost:8080/api/v1/customer/b36f1c40-4ad1-4b69-aa11-b4df23fb0852
+Accept: application/json
