@@ -18,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 
 @Slf4j
@@ -27,6 +29,18 @@ import org.springframework.http.HttpHeaders;
 public class BeerController {
 
     private final BeerService beerService;
+
+    @DeleteMapping(value = "/{beerId}")
+    public ResponseEntity deleteById(@PathVariable("beerId") UUID beerId) {
+        beerService.deleteBeerById(beerId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping(value = "/{beerId}")
+    public ResponseEntity updateById(@PathVariable("beerId") UUID beerId, @RequestBody Beer beer) {
+        beerService.updateBeerById(beerId, beer);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
     
     @PostMapping
     public ResponseEntity handlePost(@RequestBody Beer beer) {

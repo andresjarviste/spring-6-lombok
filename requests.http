@@ -3,18 +3,12 @@ Accept: application/json
 
 
 ###
+DELETE http://localhost:8080/api/v1/beer/6a3ccc94-bcbd-4d66-b6c4-8ba1bb639f5e
+Accept: application/json
+
+###
 GET http://localhost:8080/api/v1/beer/dadb2ed9-0fef-447f-92ad-315940b3bc61
 Accept: application/json
-
-
-###
-GET http://localhost:8080/api/v1/customer
-
-
-###
-GET http://localhost:8080/api/v1/customer/b36f1c40-4ad1-4b69-aa11-b4df23fb0852
-Accept: application/json
-
 
 ###
 POST http://localhost:8080/api/v1/beer
@@ -28,5 +22,47 @@ Content-Type: application/json
     "upc": "12356",
     "version": 1
   }
+  
+###
+PUT http://localhost:8080/api/v1/beer/dec929fc-19c8-4729-84c3-8172669533ba
+Content-Type: application/json  
+
+  {
+    "version": 1,
+    "beerName": "Pühaste IPA",
+    "upc": "12356222",
+    "quantityOnHand": 200,
+    "beerStyle": "PALE_ALE",
+    "price": 12.99
+  }
+
+###
+GET http://localhost:8080/api/v1/customer
+
+
+###
+GET http://localhost:8080/api/v1/customer/eee6357c-ce81-4d23-98fd-c68fa4cc7f3b
+Accept: application/json
+
+
+###
+POST http://localhost:8080/api/v1/customer
+Content-Type: application/json  
+
+  {
+    "customerName": "Jaan Sepp"
+  }
+  
+###
+PUT http://localhost:8080/api/v1/customer/eee6357c-ce81-4d23-98fd-c68fa4cc7f3b
+Content-Type: application/json  
+
+  {
+    "customerName": "Juhan Sepp"
+  }
+
+###
+DELETE  http://localhost:8080/api/v1/customer/25694580-a08b-471e-bc16-43d36d3242df
+
 
 ###
