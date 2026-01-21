@@ -4,12 +4,16 @@ package guru.springframework.restmvc.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Beer {
     private UUID id;
     private Integer version;
