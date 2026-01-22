@@ -72,7 +72,7 @@ Content-Type: application/json
   }
 
 ###
-PATCH http://localhost:8080/api/v1/customer/cf070f7a-f87b-427b-9051-846f99ace0b0
+PATCH http://localhost:8080/api/v1/customer/d18286c5-cfad-43ab-a74c-3fa15d5e4c27
 Content-Type: application/json  
 
   {
