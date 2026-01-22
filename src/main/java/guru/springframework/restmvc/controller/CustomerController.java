@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 
 
 @Slf4j
@@ -26,6 +27,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class CustomerController {
 
     private final CustomerService customerService;
+
+    @PatchMapping(value = "/{customerId}")
+    public ResponseEntity patchById(@PathVariable("customerId") UUID customerId, @RequestBody Customer customer) {
+        customerService.patchCustomerById(customerId, customer);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 
     @DeleteMapping(value = "/{customerId}")
     public ResponseEntity deleteById(@PathVariable("customerId") UUID customerId) {

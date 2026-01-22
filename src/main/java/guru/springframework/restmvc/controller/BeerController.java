@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 
 
 @Slf4j
@@ -29,6 +30,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 public class BeerController {
 
     private final BeerService beerService;
+
+    @PatchMapping(value = "/{beerId}")
+    public ResponseEntity patchById(@PathVariable("beerId") UUID beerId, @RequestBody Beer beer) {
+        beerService.patchBeerById(beerId, beer);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 
     @DeleteMapping(value = "/{beerId}")
     public ResponseEntity deleteById(@PathVariable("beerId") UUID beerId) {
