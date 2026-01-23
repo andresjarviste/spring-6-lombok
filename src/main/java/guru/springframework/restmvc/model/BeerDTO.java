@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Beer {
+public class BeerDTO {
     private UUID id;
     private Integer version;
     private String beerName;

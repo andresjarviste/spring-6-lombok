@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import guru.springframework.restmvc.services.BeerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import guru.springframework.restmvc.model.Beer;
+import guru.springframework.restmvc.model.BeerDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,9 +21,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import java.util.Optional;
-
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,10 +32,8 @@ public class BeerController {
 
     private final BeerService beerService;
 
-
-
     @PatchMapping(BEER_PATH_ID)
-    public ResponseEntity patchById(@PathVariable("beerId") UUID beerId, @RequestBody Beer beer) {
+    public ResponseEntity patchById(@PathVariable("beerId") UUID beerId, @RequestBody BeerDTO beer) {
         beerService.patchBeerById(beerId, beer);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -50,14 +45,14 @@ public class BeerController {
     }
 
     @PutMapping(BEER_PATH_ID)
-    public ResponseEntity updateById(@PathVariable("beerId") UUID beerId, @RequestBody Beer beer) {
+    public ResponseEntity updateById(@PathVariable("beerId") UUID beerId, @RequestBody BeerDTO beer) {
         beerService.updateBeerById(beerId, beer);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
     
     @PostMapping(BEER_PATH)
-    public ResponseEntity handlePost(@RequestBody Beer beer) {
-        Beer savedBeer = beerService.saveNewBeer(beer);
+    public ResponseEntity handlePost(@RequestBody BeerDTO beer) {
+        BeerDTO savedBeer = beerService.saveNewBeer(beer);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", BEER_PATH + savedBeer.getId().toString());
@@ -65,13 +60,13 @@ public class BeerController {
     }
 
     @RequestMapping(value = BEER_PATH, method = RequestMethod.GET)
-    public List<Beer> listBeers() {
+    public List<BeerDTO> listBeers() {
         log.debug("List Beers in controller was called");
         return beerService.listBeers();
     }
 
     @RequestMapping(value = BEER_PATH_ID, method = RequestMethod.GET)
-    public Beer getBeerById(@PathVariable("beerId") UUID beerId) {
+    public BeerDTO getBeerById(@PathVariable("beerId") UUID beerId) {
         log.debug("Get Beer Id in controller was called");
         return beerService.getBeerById(beerId).orElseThrow(NotFoundException::new);
     }
