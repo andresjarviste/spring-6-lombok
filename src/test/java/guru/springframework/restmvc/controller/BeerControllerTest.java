@@ -26,6 +26,7 @@ import java.util.UUID;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.Map;
@@ -125,7 +126,7 @@ public class BeerControllerTest {
     void getBeerById() throws Exception {
         Beer testBeer = beerServiceImpl.listBeers().get(0);
 
-        given(beerService.getBeerById(testBeer.getId())).willReturn(testBeer);
+        given(beerService.getBeerById(testBeer.getId())).willReturn(Optional.of(testBeer));
 
         mockMvc.perform(MockMvcRequestBuilders
             .get(BeerController.BEER_PATH_ID, testBeer.getId())
@@ -146,6 +147,14 @@ public class BeerControllerTest {
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.length()", is(3)));
+    }
+
+    @Test
+    void testGetBeerByIdNotFound() throws Exception {
+        given(beerService.getBeerById(any(UUID.class))).willReturn(Optional.empty());
+
+        mockMvc.perform(get(BeerController.BEER_PATH_ID, UUID.randomUUID()))
+                .andExpect(status().isNotFound());
     }
         
 }

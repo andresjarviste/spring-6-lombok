@@ -21,6 +21,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import java.util.Optional;
 
 
 @Slf4j
@@ -71,6 +73,7 @@ public class BeerController {
     @RequestMapping(value = BEER_PATH_ID, method = RequestMethod.GET)
     public Beer getBeerById(@PathVariable("beerId") UUID beerId) {
         log.debug("Get Beer Id in controller was called");
-        return beerService.getBeerById(beerId);
+        return beerService.getBeerById(beerId).orElseThrow(NotFoundException::new);
     }
+
 }
