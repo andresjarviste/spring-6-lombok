@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import java.util.HashMap;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -64,8 +65,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDTO getCustomerById(UUID id) {
-        return customerMap.get(id);
+    public Optional<CustomerDTO> getCustomerById(UUID id) {
+        return Optional.ofNullable(customerMap.get(id));
     }
 
     @Override

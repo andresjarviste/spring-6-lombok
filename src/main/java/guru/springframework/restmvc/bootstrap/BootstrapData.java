@@ -9,17 +9,18 @@ import java.math.BigDecimal;
 import guru.springframework.restmvc.repositories.BeerRepository;
 import guru.springframework.restmvc.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class BootstrapData {
+public class BootstrapData implements CommandLineRunner {
     
     private final BeerRepository beerRepository;
     private final CustomerRepository customerRepository;
 
-    void run(ApplicationArguments args) {
+    @Override
+    public void run(String... args) throws Exception {
         loadBeerData();
         loadCustomerData();
     }

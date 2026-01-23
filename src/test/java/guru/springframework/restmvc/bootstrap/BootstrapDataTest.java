@@ -18,9 +18,9 @@ class BootstrapDataTest {
     CustomerRepository customerRepository;
 
     @Test
-    void testLoadBootstrapData() {
+    void testLoadBootstrapData() throws Exception {
         BootstrapData bootstrapData = new BootstrapData(beerRepository, customerRepository);
-        bootstrapData.run(null);
+        bootstrapData.run();
         assertThat(beerRepository.count()).isEqualTo(3);
         assertThat(customerRepository.count()).isEqualTo(2);
     }
