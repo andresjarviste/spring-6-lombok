@@ -32,6 +32,7 @@ import java.util.HashMap;
 import org.mockito.Captor;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
+import java.util.Optional;
 
 
 @WebMvcTest(CustomerController.class)
@@ -82,6 +83,8 @@ public class CustomerControllerTest {
     void testDeleteCustomer() throws Exception {
         CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
 
+        given(CustomerService.deleteCustomerById(any(UUID.class))).willReturn(true);
+
         mockMvc.perform(delete("/api/v1/customer/" + customer.getId())
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.status().isNoContent());
@@ -96,6 +99,8 @@ public class CustomerControllerTest {
     @Test
     void testUpdateCustomer() throws Exception {
         CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
+
+        given(CustomerService.updateCustomerById(any(UUID.class), any(CustomerDTO.class))).willReturn(Optional.of(customer));
 
         mockMvc.perform(put("/api/v1/customer/" + customer.getId())
             .contentType(MediaType.APPLICATION_JSON)
