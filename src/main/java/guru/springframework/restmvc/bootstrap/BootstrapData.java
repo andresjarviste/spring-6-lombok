@@ -23,6 +23,7 @@ public class BootstrapData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         loadBeerData();
         loadCustomerData();
+        //System.out.println("Bootstrap Data NOT loaded");
     }
 
     private void loadBeerData() {

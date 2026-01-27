@@ -52,6 +52,8 @@ public class Beer {
     @Size(max = 255 )
     private String upc;
     private Integer quantityOnHand;
+
+    //@JdbcTypeCode(value = SqlTypes.SMALLINT)
     private BeerStyle beerStyle;
 
     @NotNull

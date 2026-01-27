@@ -16,6 +16,9 @@ import org.hibernate.annotations.UuidGenerator;
 import jakarta.persistence.Column;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -33,6 +36,10 @@ public class Customer {
 
     @Version
     private Integer version;
+
+    @Column(length = 255)
+    @Size(max = 255)
+    private String email;
 
     private String customerName;
     private LocalDateTime createdDate;
