@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -33,6 +34,7 @@ import java.util.Map;
 import java.util.HashMap;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 
 @WebMvcTest(BeerController.class)
 @ExtendWith(MockitoExtension.class)
@@ -110,6 +112,43 @@ public class BeerControllerTest {
         verify(beerService).updateBeerById(any(UUID.class), any(BeerDTO.class));
     }
 
+    @Test
+    void testUpdateBeerNullBeerPrice() throws Exception {
+        BeerDTO beer = beerServiceImpl.listBeers().get(0);
+
+        beer.setPrice(null);
+        
+        //given(beerService.updateBeerById(any(UUID.class), any(BeerDTO.class))).willReturn(Optional.of(beer));
+        given(beerService.saveNewBeer(any(BeerDTO.class))).willReturn(beerServiceImpl.listBeers().get(1));
+        
+        MvcResult result = mockMvc.perform(put(BeerController.BEER_PATH_ID, beer.getId())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(beer)))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$[0].price").value("must not be null"))
+            .andReturn();
+
+            System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    void testCreateBeerNullBeerName() throws Exception {
+        BeerDTO beer = beerServiceImpl.listBeers().get(0);
+
+        beer.setBeerName(null);
+        beer.setUpc(null);
+        beer.setQuantityOnHand(null);
+        beer.setPrice(null);
+        
+        given(beerService.saveNewBeer(any(BeerDTO.class))).willReturn(beerServiceImpl.listBeers().get(1));
+        MvcResult result = mockMvc.perform(post(BeerController.BEER_PATH)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(beer)))
+            .andExpect(status().isBadRequest()).andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+    
     @Test
     void testCreateBeer() throws Exception {
         BeerDTO beer = beerServiceImpl.listBeers().get(0);
