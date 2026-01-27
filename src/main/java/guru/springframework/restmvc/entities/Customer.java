@@ -14,6 +14,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import org.hibernate.annotations.UuidGenerator;
 import jakarta.persistence.Column;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Getter
 @Setter
@@ -25,7 +27,8 @@ public class Customer {
     @Id
     @GeneratedValue(generator = "UUID")
     @UuidGenerator
-    @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
     private UUID id;
 
     @Version
